@@ -26,47 +26,6 @@ elem.addEventListener('build', (e) => { /* … */ }, false);
 elem.dispatchEvent(event);
 ```
 
-The above code example uses the [EventTarget.dispatchEvent()](/en-US/docs/Web/API/EventTarget/dispatchEvent) method.
-
-This constructor is supported in most modern browsers (with Internet Explorer being the exception). For a more verbose approach (which works with Internet Explorer), see [the old-fashioned way](#the_old-fashioned_way) below.
-
-### Adding custom data – CustomEvent()
-
-To add more data to the event object, the [CustomEvent](/en-US/docs/Web/API/CustomEvent) interface exists and the **detail** property can be used to pass custom data.
-For example, the event could be created as follows:
-
-```js
-const event = new CustomEvent('build', { detail: elem.dataset.time });
-```
-
-This will then allow you to access the additional data in the event listener:
-
-```js
-function eventHandler(e) {
-  console.log(`The time is: ${e.detail}`);
-}
-```
-
-### The old-fashioned way
-
-The older approach to creating events uses APIs inspired by Java. The following shows an example with {{domxref("document.createEvent()")}}:
-
-```js
-// Create the event.
-const event = document.createEvent('Event');
-
-// Define that the event name is 'build'.
-event.initEvent('build', true, true);
-
-// Listen for the event.
-elem.addEventListener('build', (e) => {
-  // e.target matches elem
-}, false);
-
-// target can be any Element or other EventTarget.
-elem.dispatchEvent(event);
-```
-
 ### Event bubbling
 
 It is often desirable to trigger an event from a child element, and have an ancestor catch it; optionally, with data:
